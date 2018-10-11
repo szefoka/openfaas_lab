@@ -6,23 +6,22 @@ chmod 700 get_helm.sh
 ./get_helm.sh
 helm init
 helm init --upgrade
-
+sleep 60
 #
 #By default you don't have permission to deploy tiller, add an account for it
 #https://github.com/helm/helm/issues/3130
 #
-
 kubectl create serviceaccount --namespace kube-system tiller
 kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
 kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}' 
-sleep 20
+sleep 60
 helm repo update
 
 helm repo add coreos https://s3-eu-west-1.amazonaws.com/coreos-charts/stable/
 helm install coreos/prometheus-operator --name prometheus-operator --namespace monitoring
 helm install coreos/kube-prometheus --name kube-prometheus --set global.rbacEnable=true --namespace monitoring
 
-sleep 40
+sleep 60
 
 kubectl port-forward -n monitoring prometheus-kube-prometheus-0 9090 &
 kubectl port-forward $(kubectl get  pods --selector=app=kube-prometheus-grafana -n  monitoring --output=jsonpath="{.items..metadata.name}") -n monitoring  3000 &
