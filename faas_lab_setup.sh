@@ -1,5 +1,5 @@
 ./faas_netes.sh
-ssh node2 -o "StrictHostKeyChecking no" ./openfaas_lab/faas_netes.sh true
+ssh node2 -o "StrictHostKeyChecking no" "bash -s" < ./faas_netes.sh true
 
 IP=$(ifconfig eno49 | grep "inet addr:" | awk '{print $2}' | cut -c6-):6443
 TOKEN=$(kubeadm token list | tail -n 1 | cut -d ' ' -f 1)
@@ -10,7 +10,7 @@ sleep 60
 
 IP=$(ifconfig eno49 | grep "inet addr:" | awk '{print $2}' | cut -c6-):5000
 ./docker_registry_setup.sh $IP
-ssh node2 -o "StrictHostKeyChecking no" ./openfaas_lab/docker_registry_setup.sh $IP
+ssh node2 -o "StrictHostKeyChecking no" "bash -s" < ./docker_registry_setup.sh $IP
 
 ./faas_cli_install.sh
 ./kube_grafana.sh
