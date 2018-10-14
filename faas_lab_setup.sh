@@ -26,4 +26,6 @@ curl -sSL https://cli.openfaas.com | sudo sh
 #kubectl port-forward $(kubectl get  pods --selector=app=kube-prometheus-grafana -n  monitoring --output=jsonpath="{.items..metadata.name}") -n monitoring  3000 &
 #kubectl port-forward -n monitoring alertmanager-kube-prometheus-0 9093 &
 
+./kubernetes_dashboard_install.sh
+
 ssh node2 -o "StrictHostKeyChecking no" apt-get update && apt-get install apache2-utils
