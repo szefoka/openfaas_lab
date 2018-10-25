@@ -41,6 +41,8 @@ then
 	sudo git clone https://github.com/openfaas/faas-netes
 	sudo kubectl apply -f https://raw.githubusercontent.com/openfaas/faas-netes/master/namespaces.yml
 	cd faas-netes
+	#temporary fix, till faas-netes not gets gateway version 0.9.8, issue with autoscaling
+	sed -i 's/ image: openfaas\/gateway:0.9.7/ image: openfaas\/gateway:0.9.8/' yaml/gateway-dep.yml
 	sudo kubectl apply -f ./yaml
 elif [ "$CLIENT" = "true" ]
 then
