@@ -39,6 +39,7 @@ then
 	sudo chown $(id -u):$(id -g) $HOME/.kube/config
 	./weavenet_setup.sh
 	./openfaas_setup.sh
+	./faas_idler_setup.sh
 
 elif [ "$CLIENT" = "true" ]
 then
