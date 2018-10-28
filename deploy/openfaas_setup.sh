@@ -14,7 +14,7 @@ sed -i '/\        - name: basic_auth/!b;n;c\          value: "true"' yaml/gatewa
 sed -i '/\        - name: basic_auth/!b;n;c\          value: "true"' yaml/queueworker-dep.yml
 sed -i '59i\        volumeMounts: \n        - name: gateway-basic-auth \n          readOnly: true \n          mountPath: "/etc/openfaas"\n' yaml/gateway-dep.yml
 printf '      volumes:\n      - name: gateway-basic-auth\n        secret:\n          secretName: gateway-basic-auth\n' >> yaml/gateway-dep.yml 
-printf '        volumeMounts: \n        - name: gateway-basic-auth \n          readOnly: true \n          mountPath: "/etc/openfaas"\n' >> yaml/queueworker-dep.yml
+printf '\n        volumeMounts: \n        - name: gateway-basic-auth \n          readOnly: true \n          mountPath: "/etc/openfaas"\n' >> yaml/queueworker-dep.yml
 printf '      volumes:\n      - name: gateway-basic-auth\n        secret:\n          secretName: gateway-basic-auth\n' >> yaml/queueworker-dep.yml
 
 sudo kubectl apply -f ./yaml
