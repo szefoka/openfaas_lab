@@ -10,11 +10,11 @@ echo "Password: $GW_PASS" > passwd_file
 kubectl create secret generic gateway-basic-auth -n openfaas --from-literal=basic-auth-user=admin --from-literal=basic-auth-password=$GW_PASS
 kubectl create secret generic basic-auth-user -n openfaas-fn --from-literal=basic-auth-user=admin
 kubectl create secret generic basic-auth-password -n openfaas-fn --from-literal=basic-auth-password=$GW_PASS
-sed -i '/\        - name: basic_auth/!b;n;c\          value: "true"' gateway-dep.yml
-sed -i '/\        - name: basic_auth/!b;n;c\          value: "true"' queueworker-dep.yml
-sed -i '59i\        volumeMounts: \n        - name: gateway-basic-auth \n          readOnly: true \n          mountPath: "/etc/openfaas"\n' gateway-dep.yml
-printf '      volumes:\n      - name: gateway-basic-auth\n        secret:\n          secretName: gateway-basic-auth\n' >> gateway-dep.yml 
-printf '        volumeMounts: \n        - name: gateway-basic-auth \n          readOnly: true \n          mountPath: "/etc/openfaas"\n' >> queueworker-dep.yml
-printf '      volumes:\n      - name: gateway-basic-auth\n        secret:\n          secretName: gateway-basic-auth\n' >> queueworker-dep.yml
+sed -i '/\        - name: basic_auth/!b;n;c\          value: "true"' yaml/gateway-dep.yml
+sed -i '/\        - name: basic_auth/!b;n;c\          value: "true"' yaml/queueworker-dep.yml
+sed -i '59i\        volumeMounts: \n        - name: gateway-basic-auth \n          readOnly: true \n          mountPath: "/etc/openfaas"\n' yaml/gateway-dep.yml
+printf '      volumes:\n      - name: gateway-basic-auth\n        secret:\n          secretName: gateway-basic-auth\n' >> yaml/gateway-dep.yml 
+printf '        volumeMounts: \n        - name: gateway-basic-auth \n          readOnly: true \n          mountPath: "/etc/openfaas"\n' >> yaml/queueworker-dep.yml
+printf '      volumes:\n      - name: gateway-basic-auth\n        secret:\n          secretName: gateway-basic-auth\n' >> yaml/queueworker-dep.yml
 
 sudo kubectl apply -f ./yaml
