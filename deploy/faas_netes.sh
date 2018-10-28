@@ -37,13 +37,9 @@ then
 	mkdir -p $HOME/.kube
 	sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 	sudo chown $(id -u):$(id -g) $HOME/.kube/config
-	sudo kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
-	sudo git clone https://github.com/openfaas/faas-netes
-	sudo kubectl apply -f https://raw.githubusercontent.com/openfaas/faas-netes/master/namespaces.yml
-	cd faas-netes
-	#temporary fix, till faas-netes not gets gateway version 0.9.8, issue with autoscaling
-	sed -i 's/ image: openfaas\/gateway:0.9.7/ image: openfaas\/gateway:0.9.8/' yaml/gateway-dep.yml
-	sudo kubectl apply -f ./yaml
+	./weavenet_setup.sh
+	./openfaas_setup.sh
+
 elif [ "$CLIENT" = "true" ]
 then
 	echo "Client is waiting to join"
