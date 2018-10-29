@@ -5,4 +5,4 @@ cd faas-cli
 faas-cli template pull
 faas-cli deploy stack.yml --gateway localhost:31112
 cd $ROOT_DIR
-mkdir functions
+

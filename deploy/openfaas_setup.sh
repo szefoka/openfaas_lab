@@ -18,3 +18,4 @@ printf '\n        volumeMounts: \n        - name: gateway-basic-auth \n         
 printf '      volumes:\n      - name: gateway-basic-auth\n        secret:\n          secretName: gateway-basic-auth\n' >> yaml/queueworker-dep.yml
 
 sudo kubectl apply -f ./yaml
+cd ..
