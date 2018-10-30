@@ -16,6 +16,6 @@ sed -i '59i\        volumeMounts: \n        - name: gateway-basic-auth \n       
 printf '      volumes:\n      - name: gateway-basic-auth\n        secret:\n          secretName: gateway-basic-auth\n' >> yaml/gateway-dep.yml 
 printf '\n        volumeMounts: \n        - name: gateway-basic-auth \n          readOnly: true \n          mountPath: "/etc/openfaas"\n' >> yaml/queueworker-dep.yml
 printf '      volumes:\n      - name: gateway-basic-auth\n        secret:\n          secretName: gateway-basic-auth\n' >> yaml/queueworker-dep.yml
-
+sed -i '/\        - name: scale_from_zero/!b;n;c\          value: "true"' yaml/gateway-dep.yml
 sudo kubectl apply -f ./yaml
 cd ..
