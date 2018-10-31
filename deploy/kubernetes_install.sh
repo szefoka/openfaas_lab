@@ -1,6 +1,9 @@
 #!/bin/bash
 
 CLIENT=$1
+IP=$2
+TOKEN=$3
+HASH=$4
 
 #Installing Docker
 DOCKER_INSTALLED=$(which docker)
@@ -40,7 +43,8 @@ then
 
 elif [ "$CLIENT" = "true" ]
 then
-	echo "Client is waiting to join"
+	kubeadm join $IP --token $TOKEN --discovery-token-ca-cert-hash $HASH
+	echo "Client joined to Master"
 else
 	echo "Invalid argument"
 fi
