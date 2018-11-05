@@ -46,4 +46,5 @@ curl -sSL https://cli.openfaas.com | sudo sh
 ./kubernetes_dashboard_install.sh
 ./weave_scope_setup.sh
 ./custom_metrics_setup.sh
+./redis_install.sh
 ssh node2 -o "StrictHostKeyChecking no" "apt-get update && apt-get install apache2-utils"
