@@ -14,6 +14,9 @@ function wait_for_podnetwork {
 }
 
 ./kubernetes_install.sh
+
+./weavenet_setup.sh
+
 IP=$(ifconfig eno49 | grep "inet addr:" | awk '{print $2}' | cut -c6-):6443
 TOKEN=$(kubeadm token list | tail -n 1 | cut -d ' ' -f 1)
 HASH=sha256:$(openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //')
@@ -28,8 +31,7 @@ IP=$(ifconfig eno49 | grep "inet addr:" | awk '{print $2}' | cut -c6-):5000
 ./docker_registry_setup.sh $IP
 ssh node2 -o "StrictHostKeyChecking no" "bash -s" < ./docker_registry_setup.sh $IP
 
-./weavenet_setup.sh
-wait_for_podnetwork
+#wait_for_podnetwork
 
 ./helm_setup.sh
 ./openfaas_setup.sh

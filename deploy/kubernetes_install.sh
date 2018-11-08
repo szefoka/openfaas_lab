@@ -36,14 +36,14 @@ sudo swapoff -a
 
 if [ -z "$CLIENT" ]
 then
-	sudo kubeadm init
+	sudo kubeadm init --ignore-preflight-errors=SystemVerification
 	mkdir -p $HOME/.kube
 	sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 	sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 elif [ "$CLIENT" = "true" ]
 then
-	kubeadm join $IP --token $TOKEN --discovery-token-ca-cert-hash $HASH
+	kubeadm join $IP --token $TOKEN --discovery-token-ca-cert-hash $HASH --ignore-preflight-errors=SystemVerification
 	echo "Client joined to Master"
 else
 	echo "Invalid argument"
