@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: elasticsearch
+spec:
+  selector:
+    app: elasticsearch
+  ports:
+  - name: rest
+    protocol: TCP
+    port: 9200
+  - name: nodes
+    protocol: TCP
+    port: 9300
+

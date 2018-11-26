@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: codiad
+  labels:
+    app: codiad
+spec:
+  selector:
+    matchLabels:
+      app: codiad
+  template:
+    metadata:
+      labels:
+        app: codiad
+    spec:
+      containers:
+      - name: codiad
+        image: bitnami/codiad:latest
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+        env:
+        - name: CODIAD_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: codiad-secret
+              key: username
+        - name: CODIAD_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: codiad-secret
+              key: password
+        volumeMounts:
+        - mountPath: /codiad_mount
+          name: codiad-volume
+      volumes:
+      - name: codiad-volume
+        hostPath:
+          path: /users/szefoka/codiad

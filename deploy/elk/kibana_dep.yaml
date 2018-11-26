@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kibana
+  labels:
+    app: kibana
+spec:
+  selector:
+    matchLabels:
+      app: kibana
+  template:
+    metadata:
+      labels:
+        app: kibana
+    spec:
+      hostname: kibana
+      containers:
+      - name: kibana
+        image: kibana:6.5.0
+        ports:
+        - containerPort: 5601
+      restartPolicy: Always

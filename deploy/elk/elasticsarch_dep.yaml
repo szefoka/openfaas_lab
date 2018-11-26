@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elasticsearch
+  labels:
+    app: elasticsearch
+spec:
+  selector:
+    matchLabels:
+      app: elasticsearch
+  template:
+    metadata:
+      labels:
+        app: elasticsearch
+    spec:
+      hostname: elasticsearch
+      containers:
+      - name: elasticsearch
+        image: elasticsearch:6.5.0
+        ports:
+        - containerPort: 9200
+        - containerPort: 9300
+      restartPolicy: Always

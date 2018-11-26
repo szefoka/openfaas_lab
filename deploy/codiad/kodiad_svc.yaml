@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: codiad
+spec:
+  selector:
+    app: codiad
+  ports:
+  - protocol: TCP
+    port: 80
+  type: LoadBalancer
+

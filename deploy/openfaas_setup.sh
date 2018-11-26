@@ -6,7 +6,6 @@ sed -i 's/ image: openfaas\/gateway:0.9.7/ image: openfaas\/gateway:0.9.8/' yaml
 
 #enabling basic auth on gateway
 export GW_PASS=$(head -c 16 /dev/random |shasum | cut -d ' ' -f1)
-echo "Password: $GW_PASS" > passwd_file
 kubectl create secret generic gateway-basic-auth -n openfaas --from-literal=basic-auth-user=admin --from-literal=basic-auth-password=$GW_PASS
 kubectl create secret generic basic-auth-user -n openfaas-fn --from-literal=basic-auth-user=admin
 kubectl create secret generic basic-auth-password -n openfaas-fn --from-literal=basic-auth-password=$GW_PASS

@@ -13,6 +13,7 @@ function wait_for_podnetwork {
   done
 }
 
+#Faas setup
 ./kubernetes_install.sh
 
 ./weavenet_setup.sh
@@ -49,4 +50,5 @@ curl -sSL https://cli.openfaas.com | sudo sh
 ./weave_scope_setup.sh
 ./custom_metrics_setup.sh
 ./redis_install.sh
+./elk/elk_install.sh
 ssh node2 -o "StrictHostKeyChecking no" "apt-get update && apt-get install apache2-utils"
