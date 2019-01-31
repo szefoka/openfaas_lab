@@ -13,11 +13,11 @@ kubectl create secret generic kubernetes-dashboard-certs --from-file=$CERT_DIR -
 cd ..
 
 #Deploy the dashboard
-wget https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
-sed -i '158i\  type: LoadBalancer' kubernetes-dashboard.yaml
+#wget https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
+wget https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploy/recommended/kubernetes-dashboard.yaml
+sed -i '176i\  type: LoadBalancer' kubernetes-dashboard.yaml
 kubectl apply -f kubernetes-dashboard.yaml
 
 #Token based dashboard authentication
 kubectl create serviceaccount k8sadmin -n kube-system
 kubectl create clusterrolebinding k8sadmin --clusterrole=cluster-admin --serviceaccount=kube-system:k8sadmin
-

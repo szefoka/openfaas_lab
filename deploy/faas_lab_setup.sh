@@ -18,7 +18,8 @@ function wait_for_podnetwork {
 
 ./weavenet_setup.sh
 
-IP=$(ifconfig eno49 | grep "inet addr:" | awk '{print $2}' | cut -c6-):6443
+#IP=$(ifconfig eno49 | grep "inet addr:" | awk '{print $2}' | cut -c6-):6443
+IP=$(ifconfig $(route | grep '^default' | grep -o '[^ ]*$') | grep "inet addr:" | awk '{print $2}' | cut -c6-):6443
 TOKEN=$(kubeadm token list | tail -n 1 | cut -d ' ' -f 1)
 HASH=sha256:$(openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //')
 
@@ -28,16 +29,17 @@ HASH=sha256:$(openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa 
 
 wait_for_worker
 
-IP=$(ifconfig eno49 | grep "inet addr:" | awk '{print $2}' | cut -c6-):5000
+#IP=$(ifconfig eno49 | grep "inet addr:" | awk '{print $2}' | cut -c6-):5000
+IP=$(ifconfig $(route | grep '^default' | grep -o '[^ ]*$') | grep "inet addr:" | awk '{print $2}' | cut -c6-):5000
 ./docker_registry_setup.sh $IP
 ssh node2 -o "StrictHostKeyChecking no" "bash -s" < ./docker_registry_setup.sh $IP
 
 #wait_for_podnetwork
 
-./helm_setup.sh
 ./openfaas_setup.sh
 ./faas_idler_setup.sh
 ./faas_cli_install.sh
+./helm_setup.sh
 ./kube_grafana.sh
 ./metrics_setup.sh
 
