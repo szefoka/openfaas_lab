@@ -49,6 +49,7 @@ curl -sSL https://cli.openfaas.com | sudo sh
 #kubectl port-forward -n monitoring alertmanager-kube-prometheus-0 9093 &
 
 ./kubernetes_dashboard_install.sh
+./istio_install.sh
 ./weave_scope_setup.sh
 ./custom_metrics_setup.sh
 ./redis_install.sh
