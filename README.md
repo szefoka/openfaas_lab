@@ -1,10 +1,10 @@
 # openfaas_lab
 openfaas laboratory exercise for university students
 
-
-This repository can be applied for cloudlab xl170 2 node clusters
 # Deploying the cluster
-The OpenFaaS cluster can be deployed by running faas_lab_setup.sh, located in the deploy directory
+The OpenFaaS cluster can be deployed by running faas_lab_setup.sh, located in the deploy directory.
+
+Before running faas_lab_setup.sh set the nodes.conf by adding the hostnames of the desired Kubernetes worker nodes.
 
 This installs an OpenFaaS cluster on top of Kubernetes and several utilites like Grafana, Elasticsearch, Istio, Weavescope.
 
