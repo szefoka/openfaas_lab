@@ -13,6 +13,9 @@ function wait_for_podnetwork {
   done
 }
 
+source nodes.conf
+IFS=',' read -r -a NODES <<< "$NODELIST"
+
 #Faas setup
 ./kubernetes_install.sh
 
@@ -23,7 +26,12 @@ IP=$(ifconfig $(route | grep '^default' | grep -o '[^ ]*$') | grep "inet addr:" 
 TOKEN=$(kubeadm token list | tail -n 1 | cut -d ' ' -f 1)
 HASH=sha256:$(openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //')
 
-(ssh node2 -o "StrictHostKeyChecking no" "bash -s" < ./kubernetes_install.sh true $IP $TOKEN $HASH > /dev/null &)
+for i in "${NODES[@]}"
+do
+  ssh "$i" -o "StrictHostKeyChecking no" "bash -s" < ./kubernetes_install.sh true $IP $TOKEN $HASH
+done
+ 
+#(ssh node2 -o "StrictHostKeyChecking no" "bash -s" < ./kubernetes_install.sh true $IP $TOKEN $HASH > /dev/null &)
 #ssh node2 kubeadm join $IP --token $TOKEN --discovery-token-ca-cert-hash $HASH
 #sleep 60
 
@@ -32,7 +40,11 @@ wait_for_worker
 #IP=$(ifconfig eno49 | grep "inet addr:" | awk '{print $2}' | cut -c6-):5000
 IP=$(ifconfig $(route | grep '^default' | grep -o '[^ ]*$') | grep "inet addr:" | awk '{print $2}' | cut -c6-):5000
 ./docker_registry_setup.sh $IP
-ssh node2 -o "StrictHostKeyChecking no" "bash -s" < ./docker_registry_setup.sh $IP
+
+for i in "${NODES[@]}"
+do
+  ssh $i -o "StrictHostKeyChecking no" "bash -s" < ./docker_registry_setup.sh $IP
+done
 
 #wait_for_podnetwork
 
@@ -55,3 +67,4 @@ curl -sSL https://cli.openfaas.com | sudo sh
 ./redis_install.sh
 ./elk_setup.sh
 ssh node2 -o "StrictHostKeyChecking no" "apt-get update && apt-get install apache2-utils"
+
