@@ -29,7 +29,7 @@ then
 	sudo chmod 666 /etc/apt/sources.list.d/kubernetes.list
 	sudo echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" >> /etc/apt/sources.list.d/kubernetes.list
 	sudo apt-get update -y
-	sudo apt-get install -y kubelet kubeadm kubectl kubernetes-cni
+	sudo apt-get install -y kubelet=1.15.4-00 kubeadm=1.15.4-00 kubectl=1.15.4-00 kubernetes-cni
 fi
 
 #Starting Kubernetes and installing faas-netes
