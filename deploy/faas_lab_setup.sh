@@ -48,11 +48,11 @@ done
 
 #wait_for_podnetwork
 
+./helm_setup.sh
+./metrics_setup.sh
 ./openfaas_setup.sh
 ./faas_idler_setup.sh
 ./faas_cli_install.sh
-./helm_setup.sh
-./metrics_setup.sh
 
 curl -sSL https://cli.openfaas.com | sudo sh
 #kubectl port-forward -n monitoring prometheus-kube-prometheus-0 9090 &
