@@ -52,7 +52,6 @@ done
 ./faas_idler_setup.sh
 ./faas_cli_install.sh
 ./helm_setup.sh
-./kube_grafana.sh
 ./metrics_setup.sh
 
 curl -sSL https://cli.openfaas.com | sudo sh
@@ -60,8 +59,10 @@ curl -sSL https://cli.openfaas.com | sudo sh
 #kubectl port-forward $(kubectl get  pods --selector=app=kube-prometheus-grafana -n  monitoring --output=jsonpath="{.items..metadata.name}") -n monitoring  3000 &
 #kubectl port-forward -n monitoring alertmanager-kube-prometheus-0 9093 &
 
-./kubernetes_dashboard_install.sh
+#./kubernetes_dashboard_install.sh
+./kube_dashboard_setup.sh
 ./istio_install.sh
+./kube_grafana.sh
 ./weave_scope_setup.sh
 ./custom_metrics_setup.sh
 ./redis_install.sh
