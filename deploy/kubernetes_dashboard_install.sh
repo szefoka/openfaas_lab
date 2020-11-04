@@ -25,6 +25,9 @@ subjects:
   namespace: kubernetes-dashboard
 EOF
 
+sleep 10
+kubectl patch service -n kubernetes-dashboard kubernetes-dashboard --type=json -p='[{"op":"add", "path": "/spec/type", "value": LoadBalancer}]'
+
 #Gen certificates
 #mkdir -p certs
 #cd certs
