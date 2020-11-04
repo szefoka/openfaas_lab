@@ -60,12 +60,12 @@ curl -sSL https://cli.openfaas.com | sudo sh
 #kubectl port-forward -n monitoring alertmanager-kube-prometheus-0 9093 &
 
 #./kubernetes_dashboard_install.sh
-./kube_dashboard_setup.sh
-./istio_install.sh
-./kube_grafana.sh
-./weave_scope_setup.sh
-./custom_metrics_setup.sh
-./redis_install.sh
-./elk_setup.sh
+#./kube_dashboard_setup.sh
+#./istio_install.sh
+#./kube_grafana.sh
+#./weave_scope_setup.sh
+#./custom_metrics_setup.sh
+#./redis_install.sh
+#./elk_setup.sh
 ssh node2 -o "StrictHostKeyChecking no" "apt-get update && apt-get install apache2-utils"
 
